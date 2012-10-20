@@ -23,6 +23,12 @@ int main(int argc, char* argv[])
 
 	boost::thread socketThread = boost::thread(boost::ref(socketGrabber));
 
+	cout << "enter any key to end" << endl << endl;
+
+	cin.get();
+
+	socketGrabber.Complete();
+
 	socketThread.join();
 
 	cout << "done" << endl;
