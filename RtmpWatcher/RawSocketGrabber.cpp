@@ -53,7 +53,7 @@ void RawSocketGrabber::ReadOffSocket(){
 
 	int bytesRead = recv( socketPtr, packet, LS_MAX_PACKET_SIZE, 0 );
 
-	printf("\nRead data from socket %d", bytesRead);
+	//printf("\nRead data from socket %d", bytesRead);
 
 	if ( bytesRead < sizeof(IPHEADER) ){
 		delete packet;
@@ -79,15 +79,20 @@ void RawSocketGrabber::ReadOffSocket(){
 	{
 		case 6: // TCP
 		{ 
-				printf("\n -------------------- // -------------------- ");
-				printf("\n IP Header:");
-				printf("\n   Source      IP: %s", ipSrc);
-				printf("\n   Destination IP: %s", ipDest);
-				printf("\n      TCP Header:");
-				printf("\n			Offset  : %d", ipHeader->flags_foff & 0xE0);
-				printf("\n			PacketID: %d", ipHeader->packet_id);
+			
+				if(DecodeTcp(&packet[ipHeaderSize])){
+					printf("\n -------------------- // -------------------- ");
+					printf("\n IP Header:");
+					printf("\n   Source      IP: %s", ipSrc);
+					printf("\n   Destination IP: %s", ipDest);
+					printf("\n      TCP Header:");
+					printf("\n			Offset  : %d", ipHeader->flags_foff & 0xE0);
+					printf("\n			PacketID: %d", ipHeader->packet_id);
 
-				DecodeTcp(&packet[ipHeaderSize]);
+					//SocketData * socketData = ParseData(packet + ipHeaderSize + sizeof(TCPHEADER));
+
+					//delete socketData;
+				}
 
 				break;
 		}
@@ -209,18 +214,27 @@ void RawSocketGrabber::TransalteIP(unsigned int _ip, char *_cip)
 	strcpy( _cip, inet_ntoa(in) );
 }
 
-void RawSocketGrabber::DecodeTcp(char *packet)
+bool RawSocketGrabber::DecodeTcp(char *packet)
 {
 	TCPHEADER *tcp_header = (TCPHEADER *)packet;
 	unsigned short flags = ( ntohs(tcp_header->info_ctrl) & 0x003F ); 
 
-	printf("\n         source port      : %ld", htons(tcp_header->source_port));
-	printf("\n         destination port : %ld", htons(tcp_header->destination_port));
-	printf("\n         control bits     : ");
+	if(htons(tcp_header->source_port) == _targetPort || htons(tcp_header->destination_port) == _targetPort){
 
-	TcpPacketType packetType = DeterminePacketType(flags);
+		printf("\n         source port      : %ld", htons(tcp_header->source_port));
+		printf("\n         destination port : %ld", htons(tcp_header->destination_port));
+		printf("\n         control bits     : ");
 
-	printf("\n         sequence number  : %lu", ntohl(tcp_header->seq_number));
+		TcpPacketType packetType = DeterminePacketType(flags);
+
+		printf("\n         sequence number  : %lu", ntohl(tcp_header->seq_number));
+
+		printf("\n         packet type  : %d", packetType);
+
+		return true;
+	}
+
+	return false;
 }
 
 RawSocketGrabber::TcpPacketType RawSocketGrabber::DeterminePacketType(unsigned short flags){

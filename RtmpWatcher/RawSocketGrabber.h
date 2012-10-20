@@ -26,7 +26,7 @@ private:
 
 	void GetMachineIP(char * ip);
 	void TransalteIP(unsigned int _ip, char *_cip);
-	void DecodeTcp(char *_packet);
+	bool DecodeTcp(char *_packet);
 	TcpPacketType DeterminePacketType(unsigned short flags);
 
 	void InitSocket();
@@ -34,6 +34,8 @@ private:
 	void CreatePromisciousSocket();
 
 	void ReadOffSocket();
+
+	//SocketData * ParseData(unsigned char * data);
 
 	std::function<void (SocketData *)> _packetFoundHandler;
 	int _targetPort;	
