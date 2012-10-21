@@ -6,13 +6,31 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 
 RtmpInterop::RtmpPacketInterop::RtmpPacketInterop(RtmpPacket * packet){
-	bytes = gcnew array<unsigned char>(packet->dataLength);
+	_bytes = gcnew array<unsigned char>(packet->dataLength);
 
-	Marshal::Copy(IntPtr(const_cast<void*>(static_cast<const void*>(packet->data))), bytes, 0, packet->dataLength);
+	Marshal::Copy(IntPtr(const_cast<void*>(static_cast<const void*>(packet->data))), _bytes, 0, packet->dataLength);
 
-	length = packet->dataLength;
+	_length = packet->dataLength;
 
-	sourceIP = gcnew String(packet->sourceIp);
+	_sourceIP = gcnew String(packet->sourceIp);
 
-	destIp = gcnew String(packet->destIp);
+	_destIp = gcnew String(packet->destIp);
 }
+
+array<unsigned char>^ RtmpInterop::RtmpPacketInterop::GetBytes(){
+	return _bytes;
+}
+
+String ^ RtmpInterop::RtmpPacketInterop::GetSourceIP(){
+	return _sourceIP;
+}
+
+String ^ RtmpInterop::RtmpPacketInterop::GetDestIP(){
+	return _destIp;
+}
+
+int RtmpInterop::RtmpPacketInterop::GetLength(){
+	return _length;
+}
+
+

@@ -13,11 +13,15 @@ namespace RtmpInterop {
 	{
 		public:
 			RtmpPacketInterop(RtmpPacket * packet);
+			int GetLength();
+			String ^ GetSourceIP();
+			String ^ GetDestIP();
+			array<unsigned char>^ GetBytes();
 
 		private:
-			array<unsigned char>^ bytes;
-			int length;
-			String ^ sourceIP;
-			String ^ destIp;
+			array<unsigned char>^ _bytes;
+			int _length;
+			String ^ _sourceIP;
+			String ^ _destIp;
 	};
 }

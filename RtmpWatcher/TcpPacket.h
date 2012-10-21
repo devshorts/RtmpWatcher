@@ -19,4 +19,6 @@ public:
 	int dataLength;
 	char * sourceIp;
 	char * destIp;
+
+	~TcpPacket(){ free(data); }
 };

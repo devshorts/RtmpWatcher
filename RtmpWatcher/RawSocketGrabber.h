@@ -3,6 +3,7 @@
 #include <functional>
 #include <vector>
 #include "RtmpPacket.h"
+#include "RtmpPacketAggregator.h"
 
 typedef int (__stdcall *RtmpPacketFoundFuncPtr)(RtmpPacket *);
 
@@ -22,13 +23,12 @@ private:
 	void GetMachineIP(char * ip);
 	void TransalteIP(unsigned int _ip, char *_cip);
 	bool TargetPortFound(char *_packet);
+
 	TcpPacket::TcpPacketType DeterminePacketType(unsigned short flags);
 
 	void InitSocket();
 	void BindSocketToIp();
 	void CreatePromisciousSocket();
-
-	bool KnownRtmpTypeFound(unsigned char * data);
 
 	void ReadOffSocket();
 
@@ -40,6 +40,7 @@ private:
 	int _targetPort;	
 	SOCKET socketPtr;
 	sockaddr_in socketDefinition;
+	RtmpPacketAggregator aggregator;
 
 	bool isRunning;
 };

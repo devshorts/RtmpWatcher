@@ -9,7 +9,9 @@ using namespace System;
 
 public delegate void DataSentDelegate(RtmpPacket * packet);
 
-void RtmpInterop::RtmpWatcherInterop::Start(int port){
+void RtmpInterop::RtmpWatcherInterop::Start(int port, System::Action<RtmpPacketInterop^>^ onPacketFound){
+	_onPacketFound = onPacketFound;
+
 	socketGrabber = new RawSocketGrabber(port);
 
 	DataSentDelegate^ dg = gcnew DataSentDelegate(this, &RtmpInterop::RtmpWatcherInterop::DataSent);
@@ -17,15 +19,10 @@ void RtmpInterop::RtmpWatcherInterop::Start(int port){
 
 	IntPtr ip = Marshal::GetFunctionPointerForDelegate(dg);
 	RtmpPacketFoundFuncPtr cb = static_cast<RtmpPacketFoundFuncPtr>(ip.ToPointer());
+	
 	socketGrabber->RegisterHandler(cb);
 
 	socketGrabber->Start();
-	/*socketGrabber.RegisterHandler([&] (SocketData * data) { 
-
-		Console.WriteLine("Got data!");
-
-		delete data;
-	});*/
 }
 
 void RtmpInterop::RtmpWatcherInterop::Complete(){
@@ -33,9 +30,11 @@ void RtmpInterop::RtmpWatcherInterop::Complete(){
 }
 
 void RtmpInterop::RtmpWatcherInterop::DataSent(RtmpPacket * data){
-	printf("Data sent\n");
+	//printf("Data sent\n");
 
 	RtmpPacketInterop ^ interopPacket = gcnew RtmpPacketInterop(data);
+
+	_onPacketFound(interopPacket);
 }
 
 

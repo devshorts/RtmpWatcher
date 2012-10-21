@@ -13,10 +13,11 @@ namespace RtmpInterop {
 	{
 		public:
 			!RtmpWatcherInterop() { delete socketGrabber; };
-			void Start(int port);
+			void Start(int port,  System::Action<RtmpPacketInterop^>^ onPacketFound);
 			void Complete();
 
 		private:
+			System::Action<RtmpPacketInterop^>^ _onPacketFound;
 			RawSocketGrabber* socketGrabber;
 			void DataSent(RtmpPacket *);
 			GCHandle delegateHandle;

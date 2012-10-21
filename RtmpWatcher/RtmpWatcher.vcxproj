@@ -151,12 +151,14 @@
   <ItemGroup>
     <ClInclude Include="RawSocketGrabber.h" />
     <ClInclude Include="RtmpPacket.h" />
+    <ClInclude Include="RtmpPacketAggregator.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TcpDefinitions.h" />
     <ClInclude Include="TcpPacket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RawSocketGrabber.cpp" />
+    <ClCompile Include="RtmpPacketAggregator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

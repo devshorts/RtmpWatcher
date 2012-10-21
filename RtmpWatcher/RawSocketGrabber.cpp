@@ -80,22 +80,22 @@ void RawSocketGrabber::ReadOffSocket(){
 		case 6: // TCP
 		{ 
 			char * tcpHeaderStart = &packet[ipHeaderSize];
-			unsigned char * dataStart = (unsigned char *)(packet + ipHeaderSize + sizeof(TCPHEADER));
-			int dataLength = bytesRead - ipHeaderSize - sizeof(TCPHEADER);
-
+			
 			if(TargetPortFound(tcpHeaderStart)){
-				RtmpPacket * rtmpPacket = new RtmpPacket();
-				
-				rtmpPacket->tcpHeader = (TCPHEADER *)tcpHeaderStart;
-				rtmpPacket->ipHeader = ipHeader;
-				rtmpPacket->data = dataStart;
-				rtmpPacket->dataLength = dataLength;
-				rtmpPacket->sourceIp = ipSrc;
-				rtmpPacket->destIp = ipDest;
+				aggregator.Add(packet, bytesRead);
 
-				_rtmpPacketFoundCallback(rtmpPacket);
+				RtmpPacket * rtmpPacket = aggregator.PacketReady();
 
-				delete rtmpPacket;
+				if(rtmpPacket != NULL){
+					rtmpPacket->ipHeader = ipHeader;
+					rtmpPacket->tcpHeader = (TCPHEADER *)tcpHeaderStart;
+					rtmpPacket->sourceIp = ipSrc;
+					rtmpPacket->destIp = ipDest;
+
+					_rtmpPacketFoundCallback(rtmpPacket);
+
+					delete rtmpPacket;
+				}
 			}
 
 			break;
@@ -221,57 +221,11 @@ void RawSocketGrabber::TransalteIP(unsigned int _ip, char *_cip)
 bool RawSocketGrabber::TargetPortFound(char *packet)
 {
 	TCPHEADER *tcp_header = (TCPHEADER *)packet;
-	unsigned short flags = ( ntohs(tcp_header->info_ctrl) & 0x003F ); 
-	TcpPacket::TcpPacketType packetType = DeterminePacketType(flags);
-
-
-	if(htons(tcp_header->source_port) == _targetPort || htons(tcp_header->destination_port) == _targetPort){
-/*
-		printf("\n         source port      : %ld", htons(tcp_header->source_port));
-		printf("\n         destination port : %ld", htons(tcp_header->destination_port));
-		printf("\n         sequence number  : %lu", ntohl(tcp_header->seq_number));
-		printf("\n         packet type      : %d", packetType);
-*/
-		return KnownRtmpTypeFound((unsigned char *)(packet + sizeof(TCPHEADER)));
-	}
-
-	return false;
-}
-
-bool RawSocketGrabber::KnownRtmpTypeFound(unsigned char * data){
-	unsigned char dataType = *(data + 7);
-
-	RtmpPacket::RtmpDataTypes rtmpType = RtmpPacket::RtmpDataTypes::Unknown;
-	switch(dataType){
-		case 0xFF: rtmpType = RtmpPacket::RtmpDataTypes::Handshake;break;
-		case 0x01: rtmpType = RtmpPacket::RtmpDataTypes::ChunkSize;break;
-		case 0x04: rtmpType = RtmpPacket::RtmpDataTypes::Ping;break;
-		case 0x05: rtmpType = RtmpPacket::RtmpDataTypes::ServerBandwidth;break;
-		case 0x06: rtmpType = RtmpPacket::RtmpDataTypes::ClientBandwidth;break;
-		case 0x08: rtmpType = RtmpPacket::RtmpDataTypes::Audio;break;
-		case 0x09: rtmpType = RtmpPacket::RtmpDataTypes::Video;break;
-		case 0x12: rtmpType = RtmpPacket::RtmpDataTypes::Notify;break;
-		case 0x14: rtmpType = RtmpPacket::RtmpDataTypes::Invoke;break;
-		case 0x16: rtmpType = RtmpPacket::RtmpDataTypes::AggregateMessage;break;
-	}
-
-	switch(rtmpType){
-		case RtmpPacket::RtmpDataTypes::AggregateMessage: printf("Aggregate Message");break;
-		case RtmpPacket::RtmpDataTypes::Handshake: printf("Handshake Message");break;
-		case RtmpPacket::RtmpDataTypes::ChunkSize: printf("Chunksize Message");break;
-		case RtmpPacket::RtmpDataTypes::Ping: printf("Ping Message");break;
-		case RtmpPacket::RtmpDataTypes::ServerBandwidth: printf("Server Bandwidth Message");break;
-		case RtmpPacket::RtmpDataTypes::ClientBandwidth: printf("Client Bandwidth Message");break;
-		case RtmpPacket::RtmpDataTypes::Audio: printf("Audio Message");break;
-		case RtmpPacket::RtmpDataTypes::Video: printf("Video Message");break;
-		case RtmpPacket::RtmpDataTypes::Notify: printf("Notify Message");break;
-		case RtmpPacket::RtmpDataTypes::Invoke: printf("Invoke Message");break;
-	}
-
-	if(rtmpType != RtmpPacket::RtmpDataTypes::Unknown){
-		printf("\n");
+	
+	if(htons(tcp_header->source_port) == _targetPort){
 		return true;
 	}
+
 	return false;
 }
 
