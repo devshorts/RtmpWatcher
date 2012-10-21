@@ -1,3 +1,5 @@
+#pragma once
+
 #include <functional>
 #include <vector>
 #include "SocketData.h"
@@ -14,14 +16,28 @@ public:
 		URG
 	};
 
+	enum RtmpDataTypes{
+		Handshake,
+		ChunkSize,
+		Ping,
+		ServerBandwidth,
+		ClientBandwidth,
+		Audio,
+		Video,
+		Notify,
+		Invoke,
+		AggregateMessage,
+		Unknown
+	};
+
 	RawSocketGrabber(int targetPort);
 	~RawSocketGrabber();
 	void operator()();
+	void Start();
 	void RegisterHandler(std::function<void (SocketData *)> handler);
 	void Complete();
 
 private:
-	void Start();
 	void CleanupSocket();
 
 	void GetMachineIP(char * ip);
@@ -32,6 +48,8 @@ private:
 	void InitSocket();
 	void BindSocketToIp();
 	void CreatePromisciousSocket();
+
+	void ParseRtmpPacket(unsigned char * data);
 
 	void ReadOffSocket();
 

@@ -81,13 +81,13 @@ void RawSocketGrabber::ReadOffSocket(){
 		{ 
 			
 				if(DecodeTcp(&packet[ipHeaderSize])){
-					printf("\n -------------------- // -------------------- ");
+					/*printf("\n -------------------- // -------------------- ");
 					printf("\n IP Header:");
 					printf("\n   Source      IP: %s", ipSrc);
 					printf("\n   Destination IP: %s", ipDest);
 					printf("\n      TCP Header:");
 					printf("\n			Offset  : %d", ipHeader->flags_foff & 0xE0);
-					printf("\n			PacketID: %d", ipHeader->packet_id);
+					printf("\n			PacketID: %d", ipHeader->packet_id);*/
 
 					//SocketData * socketData = ParseData(packet + ipHeaderSize + sizeof(TCPHEADER));
 
@@ -218,23 +218,57 @@ bool RawSocketGrabber::DecodeTcp(char *packet)
 {
 	TCPHEADER *tcp_header = (TCPHEADER *)packet;
 	unsigned short flags = ( ntohs(tcp_header->info_ctrl) & 0x003F ); 
+	TcpPacketType packetType = DeterminePacketType(flags);
+
 
 	if(htons(tcp_header->source_port) == _targetPort || htons(tcp_header->destination_port) == _targetPort){
-
+/*
 		printf("\n         source port      : %ld", htons(tcp_header->source_port));
 		printf("\n         destination port : %ld", htons(tcp_header->destination_port));
-		printf("\n         control bits     : ");
-
-		TcpPacketType packetType = DeterminePacketType(flags);
-
 		printf("\n         sequence number  : %lu", ntohl(tcp_header->seq_number));
-
-		printf("\n         packet type  : %d", packetType);
+		printf("\n         packet type      : %d", packetType);
+*/
+		ParseRtmpPacket((unsigned char *)(packet + sizeof(TCPHEADER)));
 
 		return true;
 	}
 
 	return false;
+}
+
+void RawSocketGrabber::ParseRtmpPacket(unsigned char * data){
+	unsigned char dataType = *(data + 7);
+
+	RtmpDataTypes rtmpType = RtmpDataTypes::Unknown;
+	switch(dataType){
+		case 0xFF: rtmpType = RtmpDataTypes::Handshake;break;
+		case 0x01: rtmpType = RtmpDataTypes::ChunkSize;break;
+		case 0x04: rtmpType = RtmpDataTypes::Ping;break;
+		case 0x05: rtmpType = RtmpDataTypes::ServerBandwidth;break;
+		case 0x06: rtmpType = RtmpDataTypes::ClientBandwidth;break;
+		case 0x08: rtmpType = RtmpDataTypes::Audio;break;
+		case 0x09: rtmpType = RtmpDataTypes::Video;break;
+		case 0x12: rtmpType = RtmpDataTypes::Notify;break;
+		case 0x14: rtmpType = RtmpDataTypes::Invoke;break;
+		case 0x16: rtmpType = RtmpDataTypes::AggregateMessage;break;
+	}
+
+	if(rtmpType != RtmpDataTypes::Unknown){
+		printf("\n");
+	}
+
+	switch(rtmpType){
+		case RtmpDataTypes::AggregateMessage: printf("Aggregate Message");break;
+		case RtmpDataTypes::Handshake: printf("Handshake Message");break;
+		case RtmpDataTypes::ChunkSize: printf("Chunksize Message");break;
+		case RtmpDataTypes::Ping: printf("Ping Message");break;
+		case RtmpDataTypes::ServerBandwidth: printf("Server Bandwidth Message");break;
+		case RtmpDataTypes::ClientBandwidth: printf("Client Bandwidth Message");break;
+		case RtmpDataTypes::Audio: printf("Audio Message");break;
+		case RtmpDataTypes::Video: printf("Video Message");break;
+		case RtmpDataTypes::Notify: printf("Notify Message");break;
+		case RtmpDataTypes::Invoke: printf("Invoke Message");break;
+	}
 }
 
 RawSocketGrabber::TcpPacketType RawSocketGrabber::DeterminePacketType(unsigned short flags){
