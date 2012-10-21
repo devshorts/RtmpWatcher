@@ -4,7 +4,7 @@
 #include <vector>
 #include "RtmpPacket.h"
 
-typedef int (__stdcall *RtmpPacketFoundFuncPtr)(unsigned char *, int);
+typedef int (__stdcall *RtmpPacketFoundFuncPtr)(RtmpPacket *);
 
 class RawSocketGrabber{
 public:

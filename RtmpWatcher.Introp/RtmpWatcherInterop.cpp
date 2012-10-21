@@ -2,11 +2,12 @@
 
 #include "stdafx.h"
 
+#include "RtmpPacketInterop.h"
 #include "RtmpWatcherInterop.h"
 
 using namespace System;
 
-public delegate void DataSentDelegate(unsigned char *, int);
+public delegate void DataSentDelegate(RtmpPacket * packet);
 
 void RtmpInterop::RtmpWatcherInterop::Start(int port){
 	socketGrabber = new RawSocketGrabber(port);
@@ -31,14 +32,10 @@ void RtmpInterop::RtmpWatcherInterop::Complete(){
 	socketGrabber->Complete();
 }
 
-void RtmpInterop::RtmpWatcherInterop::DataSent(unsigned char * data, int length){
+void RtmpInterop::RtmpWatcherInterop::DataSent(RtmpPacket * data){
 	printf("Data sent\n");
 
-	array<unsigned char>^ bytes = gcnew array<unsigned char>(length);
-
-	Marshal::Copy(IntPtr(const_cast<void*>(static_cast<const void*>(data))), bytes, 0, length);
-
-
+	RtmpPacketInterop ^ interopPacket = gcnew RtmpPacketInterop(data);
 }
 
 

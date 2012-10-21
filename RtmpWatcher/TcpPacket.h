@@ -17,4 +17,6 @@ public:
 	IPHEADER * ipHeader;
 	unsigned char * data;
 	int dataLength;
+	char * sourceIp;
+	char * destIp;
 };

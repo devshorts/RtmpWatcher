@@ -84,7 +84,18 @@ void RawSocketGrabber::ReadOffSocket(){
 			int dataLength = bytesRead - ipHeaderSize - sizeof(TCPHEADER);
 
 			if(TargetPortFound(tcpHeaderStart)){
-				_rtmpPacketFoundCallback(dataStart, dataLength);
+				RtmpPacket * rtmpPacket = new RtmpPacket();
+				
+				rtmpPacket->tcpHeader = (TCPHEADER *)tcpHeaderStart;
+				rtmpPacket->ipHeader = ipHeader;
+				rtmpPacket->data = dataStart;
+				rtmpPacket->dataLength = dataLength;
+				rtmpPacket->sourceIp = ipSrc;
+				rtmpPacket->destIp = ipDest;
+
+				_rtmpPacketFoundCallback(rtmpPacket);
+
+				delete rtmpPacket;
 			}
 
 			break;

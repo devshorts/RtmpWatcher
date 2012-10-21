@@ -3,7 +3,7 @@
 #include "TcpPacket.h"
 #include "TcpDefinitions.h"
 
-class RtmpPacket : TcpPacket{
+class RtmpPacket : public TcpPacket{
 public:
 	enum RtmpDataTypes{
 		Handshake,

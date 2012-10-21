@@ -18,7 +18,7 @@ namespace RtmpInterop {
 
 		private:
 			RawSocketGrabber* socketGrabber;
-			void DataSent(unsigned char * data, int length);
+			void DataSent(RtmpPacket *);
 			GCHandle delegateHandle;
 	};
 }
