@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using RtmpInterop;
 
 namespace RtmpWatcherNet
@@ -9,7 +10,15 @@ namespace RtmpWatcherNet
         {
             var watcher = new RtmpWatcherInterop();
 
-            watcher.Start(8935);
+            var thread = new Thread(() => watcher.Start(8935));
+
+            thread.Start();
+
+            Console.ReadKey();
+
+            watcher.Complete();
+
+            Console.WriteLine("Done!");
 
             Console.ReadKey();
         }

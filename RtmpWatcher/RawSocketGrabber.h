@@ -4,6 +4,8 @@
 #include <vector>
 #include "SocketData.h"
 
+typedef int (__stdcall *dataReceivedFuncPtr)(unsigned char *, int);
+
 class RawSocketGrabber{
 public:
 
@@ -34,7 +36,8 @@ public:
 	~RawSocketGrabber();
 	void operator()();
 	void Start();
-	void RegisterHandler(std::function<void (SocketData *)> handler);
+	void RegisterHandler(dataReceivedFuncPtr);
+	
 	void Complete();
 
 private:
@@ -49,13 +52,15 @@ private:
 	void BindSocketToIp();
 	void CreatePromisciousSocket();
 
-	void ParseRtmpPacket(unsigned char * data);
+	bool ParseRtmpPacket(unsigned char * data);
 
 	void ReadOffSocket();
 
 	//SocketData * ParseData(unsigned char * data);
 
-	std::function<void (SocketData *)> _packetFoundHandler;
+	dataReceivedFuncPtr _packetFoundHandler;
+
+	
 	int _targetPort;	
 	SOCKET socketPtr;
 	sockaddr_in socketDefinition;

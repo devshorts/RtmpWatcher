@@ -81,17 +81,7 @@ void RawSocketGrabber::ReadOffSocket(){
 		{ 
 			
 				if(DecodeTcp(&packet[ipHeaderSize])){
-					/*printf("\n -------------------- // -------------------- ");
-					printf("\n IP Header:");
-					printf("\n   Source      IP: %s", ipSrc);
-					printf("\n   Destination IP: %s", ipDest);
-					printf("\n      TCP Header:");
-					printf("\n			Offset  : %d", ipHeader->flags_foff & 0xE0);
-					printf("\n			PacketID: %d", ipHeader->packet_id);*/
-
-					//SocketData * socketData = ParseData(packet + ipHeaderSize + sizeof(TCPHEADER));
-
-					//delete socketData;
+					_packetFoundHandler((unsigned char *)(packet + ipHeaderSize + sizeof(TCPHEADER)), bytesRead - ipHeaderSize - sizeof(TCPHEADER));
 				}
 
 				break;
@@ -116,7 +106,7 @@ void RawSocketGrabber::Complete(){
 	isRunning = false;
 }
 
-void RawSocketGrabber::RegisterHandler(std::function<void (SocketData *)> handler){
+void RawSocketGrabber::RegisterHandler(dataReceivedFuncPtr handler){
 	_packetFoundHandler = handler;
 }
 
@@ -228,15 +218,13 @@ bool RawSocketGrabber::DecodeTcp(char *packet)
 		printf("\n         sequence number  : %lu", ntohl(tcp_header->seq_number));
 		printf("\n         packet type      : %d", packetType);
 */
-		ParseRtmpPacket((unsigned char *)(packet + sizeof(TCPHEADER)));
-
-		return true;
+		return ParseRtmpPacket((unsigned char *)(packet + sizeof(TCPHEADER)));
 	}
 
 	return false;
 }
 
-void RawSocketGrabber::ParseRtmpPacket(unsigned char * data){
+bool RawSocketGrabber::ParseRtmpPacket(unsigned char * data){
 	unsigned char dataType = *(data + 7);
 
 	RtmpDataTypes rtmpType = RtmpDataTypes::Unknown;
@@ -253,10 +241,6 @@ void RawSocketGrabber::ParseRtmpPacket(unsigned char * data){
 		case 0x16: rtmpType = RtmpDataTypes::AggregateMessage;break;
 	}
 
-	if(rtmpType != RtmpDataTypes::Unknown){
-		printf("\n");
-	}
-
 	switch(rtmpType){
 		case RtmpDataTypes::AggregateMessage: printf("Aggregate Message");break;
 		case RtmpDataTypes::Handshake: printf("Handshake Message");break;
@@ -269,6 +253,12 @@ void RawSocketGrabber::ParseRtmpPacket(unsigned char * data){
 		case RtmpDataTypes::Notify: printf("Notify Message");break;
 		case RtmpDataTypes::Invoke: printf("Invoke Message");break;
 	}
+
+	if(rtmpType != RtmpDataTypes::Unknown){
+		printf("\n");
+		return true;
+	}
+	return false;
 }
 
 RawSocketGrabber::TcpPacketType RawSocketGrabber::DeterminePacketType(unsigned short flags){
