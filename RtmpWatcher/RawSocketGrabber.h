@@ -2,41 +2,17 @@
 
 #include <functional>
 #include <vector>
-#include "SocketData.h"
+#include "RtmpPacket.h"
 
-typedef int (__stdcall *dataReceivedFuncPtr)(unsigned char *, int);
+typedef int (__stdcall *RtmpPacketFoundFuncPtr)(unsigned char *, int);
 
 class RawSocketGrabber{
 public:
-
-	enum TcpPacketType{
-		FIN,
-		SYN,
-		RST,
-		PSH,
-		ACK,
-		URG
-	};
-
-	enum RtmpDataTypes{
-		Handshake,
-		ChunkSize,
-		Ping,
-		ServerBandwidth,
-		ClientBandwidth,
-		Audio,
-		Video,
-		Notify,
-		Invoke,
-		AggregateMessage,
-		Unknown
-	};
-
 	RawSocketGrabber(int targetPort);
 	~RawSocketGrabber();
 	void operator()();
 	void Start();
-	void RegisterHandler(dataReceivedFuncPtr);
+	void RegisterHandler(RtmpPacketFoundFuncPtr);
 	
 	void Complete();
 
@@ -45,20 +21,20 @@ private:
 
 	void GetMachineIP(char * ip);
 	void TransalteIP(unsigned int _ip, char *_cip);
-	bool DecodeTcp(char *_packet);
-	TcpPacketType DeterminePacketType(unsigned short flags);
+	bool TargetPortFound(char *_packet);
+	TcpPacket::TcpPacketType DeterminePacketType(unsigned short flags);
 
 	void InitSocket();
 	void BindSocketToIp();
 	void CreatePromisciousSocket();
 
-	bool ParseRtmpPacket(unsigned char * data);
+	bool KnownRtmpTypeFound(unsigned char * data);
 
 	void ReadOffSocket();
 
 	//SocketData * ParseData(unsigned char * data);
 
-	dataReceivedFuncPtr _packetFoundHandler;
+	RtmpPacketFoundFuncPtr _rtmpPacketFoundCallback;
 
 	
 	int _targetPort;	

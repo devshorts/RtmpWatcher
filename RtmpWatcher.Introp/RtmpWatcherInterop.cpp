@@ -15,7 +15,7 @@ void RtmpInterop::RtmpWatcherInterop::Start(int port){
 	delegateHandle = GCHandle::Alloc(dg);
 
 	IntPtr ip = Marshal::GetFunctionPointerForDelegate(dg);
-	dataReceivedFuncPtr cb = static_cast<dataReceivedFuncPtr>(ip.ToPointer());
+	RtmpPacketFoundFuncPtr cb = static_cast<RtmpPacketFoundFuncPtr>(ip.ToPointer());
 	socketGrabber->RegisterHandler(cb);
 
 	socketGrabber->Start();
