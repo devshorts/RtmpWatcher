@@ -32,7 +32,7 @@ namespace RtmpWatcherNet
         {
             using (var stream = new MemoryStream(obj.GetBytes()))
             {
-                foreach (var i in Enumerable.Range(0, 8))
+                foreach (var i in Enumerable.Range(0, 9))
                 {
                     stream.ReadByte();
                 }
