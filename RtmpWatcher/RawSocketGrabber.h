@@ -3,7 +3,7 @@
 #include <functional>
 #include <vector>
 #include "RtmpPacket.h"
-#include "RtmpPacketAggregator.h"
+#include "PacketOrderer.h"
 
 typedef int (__stdcall *RtmpPacketFoundFuncPtr)(RtmpPacket *);
 
@@ -40,7 +40,8 @@ private:
 	int _targetPort;	
 	SOCKET socketPtr;
 	sockaddr_in socketDefinition;
-	RtmpPacketAggregator aggregator;
+
+	PacketOrderer orderer;
 
 	bool isRunning;
 };

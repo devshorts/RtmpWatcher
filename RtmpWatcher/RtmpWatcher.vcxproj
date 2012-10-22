@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="PacketOrderer.h" />
     <ClInclude Include="RawSocketGrabber.h" />
     <ClInclude Include="RtmpPacket.h" />
     <ClInclude Include="RtmpPacketAggregator.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="TcpPacket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PacketOrderer.cpp" />
     <ClCompile Include="RawSocketGrabber.cpp" />
     <ClCompile Include="RtmpPacketAggregator.cpp" />
   </ItemGroup>

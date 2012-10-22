@@ -82,9 +82,10 @@ void RawSocketGrabber::ReadOffSocket(){
 			char * tcpHeaderStart = &packet[ipHeaderSize];
 			
 			if(TargetPortFound(tcpHeaderStart)){
-				aggregator.Add(packet, bytesRead);
 
-				RtmpPacket * rtmpPacket = aggregator.PacketReady();
+				orderer.AddPacket(packet, bytesRead);
+
+				RtmpPacket * rtmpPacket = orderer.PacketReady();
 
 				if(rtmpPacket != NULL){
 					rtmpPacket->ipHeader = ipHeader;
