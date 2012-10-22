@@ -26,5 +26,6 @@ namespace RtmpInterop {
 			String ^ _sourceIP;
 			String ^ _destIp;
 			RtmpPacketTypeManaged::RtmpPacketType _packetType;
+			RtmpPacketTypeManaged::RtmpPacketType DeterminePacketType(RtmpPacket::RtmpDataTypes rawType);
 	};
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using RtmpInterop;
 using RtmpWatcherNet.Common;
@@ -30,24 +31,15 @@ namespace RtmpWatcherNet
 
         private static void OnPacketFound(RtmpPacketInterop obj)
         {
+            String bytesString = "";
             using (var stream = new MemoryStream(obj.GetBytes()))
             {
-                foreach (var i in Enumerable.Range(0, 9))
-                {
-                    stream.ReadByte();
-                }
-
-                try
-                {
-                    var o = AMFSerializerUtil<object>.DeserializeAmf(stream);
-                }
-                catch (Exception ex)
-                {
-
-                }
-
+                bytesString = Encoding.UTF8.GetString(stream.ToArray());
             }
+
             Console.WriteLine("Found packet {2} from {0} length {1}", obj.GetSourceIP(), obj.GetLength(), obj.GetRtmpPacketType());
+            Console.WriteLine("\t\t{0}", bytesString.Substring(0,bytesString.Length > 200 ? 200 : bytesString.Length));
+            Console.WriteLine();
         }
     }
 }

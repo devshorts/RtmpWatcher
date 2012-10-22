@@ -17,18 +17,7 @@ RtmpInterop::RtmpPacketInterop::RtmpPacketInterop(RtmpPacket * packet){
 
 	_destIp = gcnew String(packet->destIp);
 
-	switch(packet->rtmpPacketType){
-		case RtmpPacket::RtmpDataTypes::Handshake: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Handshake; break;
-		case RtmpPacket::RtmpDataTypes::ChunkSize: _packetType = RtmpPacketTypeManaged::RtmpPacketType::ChunkSize; break;
-		case RtmpPacket::RtmpDataTypes::Ping: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Ping; break;
-		case RtmpPacket::RtmpDataTypes::ServerBandwidth: _packetType = RtmpPacketTypeManaged::RtmpPacketType::ServerBandwidth; break;
-		case RtmpPacket::RtmpDataTypes::ClientBandwidth: _packetType = RtmpPacketTypeManaged::RtmpPacketType::ClientBandwidth; break;
-		case RtmpPacket::RtmpDataTypes::Audio: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Audio; break;
-		case RtmpPacket::RtmpDataTypes::Video: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Video; break;
-		case RtmpPacket::RtmpDataTypes::Notify: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Notify; break;
-		case RtmpPacket::RtmpDataTypes::Invoke: _packetType = RtmpPacketTypeManaged::RtmpPacketType::Invoke; break;
-		case RtmpPacket::RtmpDataTypes::AggregateMessage: _packetType = RtmpPacketTypeManaged::RtmpPacketType::AggregateMessage; break;
-	}
+	_packetType = DeterminePacketType(packet->rtmpPacketType);
 }
 
 RtmpInterop::RtmpPacketTypeManaged::RtmpPacketType RtmpInterop::RtmpPacketInterop::GetRtmpPacketType(){
@@ -51,4 +40,37 @@ int RtmpInterop::RtmpPacketInterop::GetLength(){
 	return _length;
 }
 
+RtmpInterop::RtmpPacketTypeManaged::RtmpPacketType RtmpInterop::RtmpPacketInterop::DeterminePacketType(RtmpPacket::RtmpDataTypes rawType){
+	switch(rawType){
+		case RtmpPacket::RtmpDataTypes::Handshake: 
+			return RtmpPacketTypeManaged::RtmpPacketType::Handshake;
 
+		case RtmpPacket::RtmpDataTypes::ChunkSize:
+			return RtmpPacketTypeManaged::RtmpPacketType::ChunkSize; 
+		
+		case RtmpPacket::RtmpDataTypes::Ping:
+			return RtmpPacketTypeManaged::RtmpPacketType::Ping; 
+		
+		case RtmpPacket::RtmpDataTypes::ServerBandwidth:
+			return RtmpPacketTypeManaged::RtmpPacketType::ServerBandwidth; 
+		
+		case RtmpPacket::RtmpDataTypes::ClientBandwidth:
+			return RtmpPacketTypeManaged::RtmpPacketType::ClientBandwidth; 
+		
+		case RtmpPacket::RtmpDataTypes::Audio:
+			return RtmpPacketTypeManaged::RtmpPacketType::Audio; 
+		
+		case RtmpPacket::RtmpDataTypes::Video:
+			return RtmpPacketTypeManaged::RtmpPacketType::Video; 
+		
+		case RtmpPacket::RtmpDataTypes::Notify:
+			return RtmpPacketTypeManaged::RtmpPacketType::Notify; 
+		
+		case RtmpPacket::RtmpDataTypes::Invoke:
+			return RtmpPacketTypeManaged::RtmpPacketType::Invoke; 
+		
+		case RtmpPacket::RtmpDataTypes::AggregateMessage:
+			return RtmpPacketTypeManaged::RtmpPacketType::AggregateMessage; 
+	}
+	return RtmpPacketTypeManaged::RtmpPacketType::Unknown;
+}
