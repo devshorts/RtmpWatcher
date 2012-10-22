@@ -17,15 +17,20 @@ void RtmpPacketAggregator::Add(char * data, int bytesTotal){
 		return;
 	}
 
-	RtmpPacket::RtmpDataTypes payloadType = GetRtmpPacketType((unsigned char *)payload);
+	// see if a packet started
+	auto testingType = GetRtmpPacketType((unsigned char *)payload);
 
-	if(payloadType != RtmpPacket::RtmpDataTypes::Unknown && !foundStart){
+	if(testingType != RtmpPacket::RtmpDataTypes::Unknown && !foundStart){
+
+		// tracking this packet
+		payloadType = testingType;
+		
 		// start of packet
 		foundStart = true;
 
 		totalFound = 0;
 
-		unsigned char totalExpected_byte0 = *(payload + 4);
+		unsigned char totalExpected_byte0 = *(payload + 4);	
 		unsigned char totalExpected_byte1 = *(payload + 5);
 		unsigned char totalExpected_byte2 = *(payload + 6);
 
@@ -55,6 +60,7 @@ RtmpPacket * RtmpPacketAggregator::PacketReady(){
 
 		free(dataCopy);
 
+		rtmpPacket->rtmpPacketType = payloadType;
 		rtmpPacket->dataLength = totalFound;	
 
 		// need to find the next packet 

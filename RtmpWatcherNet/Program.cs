@@ -47,7 +47,7 @@ namespace RtmpWatcherNet
                 }
 
             }
-            Console.WriteLine("Found packet from {0} length {1}", obj.GetSourceIP(), obj.GetLength());
+            Console.WriteLine("Found packet {2} from {0} length {1}", obj.GetSourceIP(), obj.GetLength(), obj.GetRtmpPacketType());
         }
     }
 }

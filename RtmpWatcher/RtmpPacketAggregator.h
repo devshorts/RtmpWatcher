@@ -17,5 +17,6 @@ private:
 	
 	bool foundStart;
 	char * dataCopy;
+	RtmpPacket::RtmpDataTypes payloadType;
 };
 
