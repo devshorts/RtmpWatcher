@@ -8,7 +8,7 @@ PacketOrderer::~PacketOrderer(){
 	
 }
 
-void PacketOrderer::AddPacket(char * data, int length){
+void PacketOrderer::AddPacket(const char * data, int length){
 	aggregator.Add(data, length);
 }
 

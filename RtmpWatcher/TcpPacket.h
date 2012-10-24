@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <string>
 #include "TcpDefinitions.h"
 
 class TcpPacket{
@@ -18,8 +19,8 @@ public:
 	IPHEADER * ipHeader;
 	unsigned char * data;
 	int dataLength;
-	char * sourceIp;
-	char * destIp;
+	std::string sourceIp;
+	std::string destIp;
 
 	~TcpPacket(){ free(data); }
 };

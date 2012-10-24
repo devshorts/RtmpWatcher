@@ -8,7 +8,7 @@ class PacketOrderer
 public:
 	PacketOrderer();
 	~PacketOrderer();
-	void AddPacket(char * data, int length);
+	void AddPacket(const char * data, int length);
 	RtmpPacket * PacketReady();
 private:
 	RtmpPacketAggregator aggregator;

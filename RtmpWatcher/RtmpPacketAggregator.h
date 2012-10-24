@@ -6,7 +6,7 @@ class RtmpPacketAggregator
 {
 public:
 	RtmpPacketAggregator(void);
-	void Add(char * data, int bytesTotal);
+	void Add(const char * data, int bytesTotal);
 	RtmpPacket * PacketReady();
 
 private:

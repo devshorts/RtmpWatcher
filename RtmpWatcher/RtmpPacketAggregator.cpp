@@ -8,8 +8,8 @@ RtmpPacketAggregator::RtmpPacketAggregator(void)
 	totalExpected = 0;
 }
 
-void RtmpPacketAggregator::Add(char * data, int bytesTotal){
-	char * payload = data + sizeof(IPHEADER) + sizeof(TCPHEADER);
+void RtmpPacketAggregator::Add(const char * data, int bytesTotal){
+	const char * payload = data + sizeof(IPHEADER) + sizeof(TCPHEADER);
 
 	int sizeOfPayload = bytesTotal - sizeof(IPHEADER) - sizeof(TCPHEADER);
 

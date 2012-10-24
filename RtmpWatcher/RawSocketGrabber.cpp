@@ -23,62 +23,16 @@ void RawSocketGrabber::Start(){
 
 	auto handle = InitSocket();
 
+	if(handle == NULL){
+		return;
+	}
+
 	while(isRunning){
 		ReadOffSocket(handle);
 	}
 
 	CleanupSocket();
 }
-
-///* Callback function invoked by libpcap for every incoming packet */
-//void RawSocketGrabber::PacketCallback(u_char *param, const struct pcap_pkthdr *header, const u_char *pkt_data)
-//{
-//    struct tm ltime;
-//    char timestr[16];
-//    IPHEADER *ih;
-//    //udp_header *uh;
-//    u_int ip_len;
-//    u_short sport,dport;
-//    time_t local_tv_sec;
-//
-//    /*
-//     * Unused variable
-//     */
-//    (VOID)(param);
-//
-//    /* convert the timestamp to readable format */
-//    local_tv_sec = header->ts.tv_sec;
-//    localtime_s(&ltime, &local_tv_sec);
-//    strftime( timestr, sizeof timestr, "%H:%M:%S", &ltime);
-//
-//    /* print timestamp and length of the packet */
-//    printf("%s.%.6d len:%d ", timestr, header->ts.tv_usec, header->len);
-//
-//    /* retireve the position of the ip header */
-//    ih = (IPHEADER *) (pkt_data +
-//        14); //length of ethernet header
-//
-//    /* retireve the position of the udp header */
-//    ip_len = (ih->ver_ihl & 0xf) * 4;
-//    //uh = (udp_header *) ((u_char*)ih + ip_len);
-//
-//    /* convert from network byte order to host byte order */
-//   /* sport = ntohs( uh->sport );
-//    dport = ntohs( uh->dport );*/
-//
-//    ///* print ip addresses and udp ports */
-//    //printf("%d.%d.%d.%d.%d -> %d.%d.%d.%d.%d\n",
-//    //    ih->saddr.byte1,
-//    //    ih->saddr.byte2,
-//    //    ih->saddr.byte3,
-//    //    ih->saddr.byte4,
-//    //    sport,
-//    //    ih->daddr.byte1,
-//    //    ih->daddr.byte2,
-//    //    ih->daddr.byte3,
-//    //    ih->daddr.byte4,
-//    //    dport);
-//}
 
 void RawSocketGrabber::ReadOffSocket(pcap_t * adhandle){
 	IPHEADER *ipHeader;
@@ -91,59 +45,33 @@ void RawSocketGrabber::ReadOffSocket(pcap_t * adhandle){
 	char errbuf[PCAP_ERRBUF_SIZE];
 	struct tm ltime;
 	char timestr[16];
+	const int ethernetFrameHeader = 14;
 
 	/* Retrieve the packets */
-	while((res = pcap_next_ex( adhandle, &header, &pkt_data)) >= 0){
+	while((res = pcap_next_ex( adhandle, &header, &pkt_data)) >= 0 && isRunning){
 
-		if(res == 0)
+		if(res == 0){
 			/* Timeout elapsed */
 			continue;
+		}
 
-		/* convert the timestamp to readable format */
-		local_tv_sec = header->ts.tv_sec;
-		localtime_s(&ltime, &local_tv_sec);
-		strftime( timestr, sizeof timestr, "%H:%M:%S", &ltime);
+		orderer.AddPacket((const char *)(pkt_data + ethernetFrameHeader), header->len - ethernetFrameHeader);
 
-		printf("%s,%.6d len:%d\n", timestr, header->ts.tv_usec, header->len);
+		RtmpPacket * rtmpPacket = orderer.PacketReady();
 
-		//// Read http://www.ietf.org/rfc/rfc1700.txt?number=1700
-		//switch( ipHeader->protocol )
-		//{
-		//	case 6: // TCP
-		//	{ 
-		//		/*std::string target = "10.0.6.14";
-		//		std::string source(ipSrc);*/
-		//	
-		//	
-		//		//char * tcpHeaderStart = &packet[ipHeaderSize];
-		//	
-		//		//if(TargetPortFound(tcpHeaderStart)){
-		//			/*if(source.compare(target) == 0){
-		//				printf("read bytes %d from %s to %s\n", bytesRead, ipSrc, ipDest);
-		//			}*/
-		//		
-		//			/*orderer.AddPacket(packet, bytesRead);
+		if(rtmpPacket != NULL){
+			char srcIp[20];
+			char dstIp[20];
+			TransalteIP(((IPHEADER *)(pkt_data + ethernetFrameHeader))->source_ip, srcIp);
+			TransalteIP(((IPHEADER *)(pkt_data + ethernetFrameHeader))->destination_ip, dstIp);
 
-		//			RtmpPacket * rtmpPacket = orderer.PacketReady();
+			rtmpPacket->sourceIp.append(srcIp);
+			rtmpPacket->destIp.append(dstIp);
 
-		//			if(rtmpPacket != NULL){
-		//				rtmpPacket->ipHeader = ipHeader;
-		//				rtmpPacket->tcpHeader = (TCPHEADER *)tcpHeaderStart;
-		//				rtmpPacket->sourceIp = ipSrc;
-		//				rtmpPacket->destIp = ipDest;
+			_rtmpPacketFoundCallback(rtmpPacket);
 
-		//				_rtmpPacketFoundCallback(rtmpPacket);
-
-		//				delete rtmpPacket;
-		//			}*/
-		//		//}
-
-		//		//break;
-		//	}
-		//}
-
-		//delete packet;
-
+			delete rtmpPacket;
+		}
 	}
 
 	if(res == -1){
@@ -182,6 +110,10 @@ pcap_t * RawSocketGrabber::InitSocket(){
 	struct pcap_pkthdr *header;
 	const u_char *pkt_data;
 	time_t local_tv_sec;
+	std::string packetFilter("tcp and src port " + std::to_string(static_cast<long long>(_targetPort)));
+	
+	u_int netmask;
+	struct bpf_program fcode;
 
 	/* Retrieve the device list on the local machine */
 	if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &alldevs, errbuf) == -1)
@@ -236,71 +168,35 @@ pcap_t * RawSocketGrabber::InitSocket(){
 		return NULL;
 	}
 
+	if(d->addresses != NULL){
+		/* Retrieve the mask of the first address of the interface */
+		netmask=((struct sockaddr_in *)(d->addresses->netmask))->sin_addr.S_un.S_addr;
+	}
+	else{
+		/* If the interface is without addresses we suppose to be in a C class network */
+		netmask=0xffffff;
+	}
+
 	printf("\nlistening on %s...\n", d->description);
 
-	/* At this point, we don't need any more the device list. Free it */
-	pcap_freealldevs(alldevs);
+	if (pcap_compile(adhandle, &fcode, packetFilter.c_str(), 1, netmask) < 0)
+	{
+		fprintf(stderr,"\nUnable to compile the packet filter. Check the syntax.\n");
+		/* Free the device list */
+		pcap_freealldevs(alldevs);
+		return NULL;
+	}
+
+	//set the filter
+	if (pcap_setfilter(adhandle, &fcode)<0)
+	{
+		fprintf(stderr,"\nError setting the filter.\n");
+		/* Free the device list */
+		pcap_freealldevs(alldevs);
+		return NULL;
+	}
 
 	return adhandle;
-}
-
-void RawSocketGrabber::CreatePromisciousSocket(){
-	//int optval = SIO_RCVALL;
-	//DWORD dwLen = 0;
-	//// Set socket to promiscuous mode
-	//// setsockopt wont work ... dont even try it
-	//if ( WSAIoctl( socketPtr, 
-	//	SIO_RCVALL,
-	//	&optval,
-	//	sizeof(optval),
-	//	NULL,
-	//	0,
-	//	&dwLen,
-	//	NULL,
-	//	NULL ) == SOCKET_ERROR )
-
-	//{
-	//	printf( "Error setting promiscious mode: WSAIoctl  = %ld\n", WSAGetLastError() );
-	//	throw "Error setting promsocous mode";
-	//}
-
-}
-
-void RawSocketGrabber::BindSocketToIp(){
-//	char localIp[20];
-//
-//	memset( localIp, 0x00, sizeof(localIp) );
-//
-//	GetMachineIP(localIp);
-//
-//	printf("using ip %s", localIp);
-//
-////	socketDefinition.sin_family = AF_INET;
-//
-//	socketDefinition.sin_port = htons(50000);
-//
-//	// If your machine has more than one IP you might put another one instead thisIP value
-//	socketDefinition.sin_addr.s_addr = inet_addr(localIp);
-//
-//	if ( bind( socketPtr, (struct sockaddr *)&socketDefinition, sizeof(socketDefinition) ) == SOCKET_ERROR )
-//	{
-//		printf( "Error: bind = %ld\n", WSAGetLastError() );
-//		throw "Error binding";
-//	}
-}
-
-void RawSocketGrabber::GetMachineIP(char *ip)
-{
-	char host_name[128];
-	struct hostent *hs;
-	struct in_addr in;
-
-	memset( host_name, 0x00, sizeof(host_name) );
-	gethostname(host_name,128);
-	hs = gethostbyname(host_name);
-
-	memcpy( &in, hs->h_addr, hs->h_length );
-	strcpy( ip, inet_ntoa(in) );
 }
 
 void RawSocketGrabber::TransalteIP(unsigned int _ip, char *_cip)
@@ -310,35 +206,4 @@ void RawSocketGrabber::TransalteIP(unsigned int _ip, char *_cip)
 	in.S_un.S_addr = _ip;
 
 	strcpy( _cip, inet_ntoa(in) );
-}
-
-bool RawSocketGrabber::TargetPortFound(char *packet)
-{
-	TCPHEADER *tcp_header = (TCPHEADER *)packet;
-	
-	if(htons(tcp_header->source_port) == _targetPort){
-		return true;
-	}
-
-	return false;
-}
-
-TcpPacket::TcpPacketType RawSocketGrabber::DeterminePacketType(unsigned short flags){
-	if ( flags & 0x01 ) // FIN
-		return TcpPacket::FIN;
-
-	if ( flags & 0x02 ) // SYN
-		return TcpPacket::SYN;
-
-	if ( flags & 0x04 ) // RST
-		return TcpPacket::RST;
-
-	if ( flags & 0x08 ) // PSH
-		return TcpPacket::PSH;
-
-	if ( flags & 0x10 ) // ACK
-		return TcpPacket::ACK;
-
-	if ( flags & 0x20 ) // URG
-		return TcpPacket::URG;
 }

@@ -13,9 +13,9 @@ RtmpInterop::RtmpPacketInterop::RtmpPacketInterop(RtmpPacket * packet){
 
 	_length = packet->dataLength;
 
-	_sourceIP = gcnew String(packet->sourceIp);
+	_sourceIP = gcnew String(packet->sourceIp.c_str());
 
-	_destIp = gcnew String(packet->destIp);
+	_destIp = gcnew String(packet->destIp.c_str());
 
 	_packetType = DeterminePacketType(packet->rtmpPacketType);
 }
