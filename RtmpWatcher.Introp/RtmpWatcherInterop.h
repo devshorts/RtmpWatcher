@@ -14,7 +14,7 @@ namespace RtmpInterop {
 	{
 		public:
 			!RtmpWatcherInterop() { delete socketGrabber; };
-			void Start(int port,  System::Action<RtmpPacketInterop^>^ onPacketFound);
+			void Start(int deviceIndex, int port,  System::Action<RtmpPacketInterop^>^ onPacketFound);
 			void Complete();
 
 		private:
