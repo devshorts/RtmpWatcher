@@ -2,7 +2,6 @@
 
 #include "stdafx.h"
 
-#include "RtmpPacketInterop.h"
 #include "RtmpWatcherInterop.h"
 
 using namespace System;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <WinSock2.h>
 #include <windows.h>
 
 typedef struct _IP_HEADER_

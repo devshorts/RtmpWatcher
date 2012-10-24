@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "RtmpPacketInterop.h"
 #include "RawSocketGrabber.h"
 
 using namespace System;

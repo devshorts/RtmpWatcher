@@ -1,9 +1,20 @@
 #pragma once
 
+#define HAVE_REMOTE
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <functional>
 #include <vector>
+#include "pcap.h"
 #include "RtmpPacket.h"
 #include "PacketOrderer.h"
+#include "TcpDefinitions.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <WinSock2.h>
+#include <windows.h>
 
 typedef int (__stdcall *RtmpPacketFoundFuncPtr)(RtmpPacket *);
 
@@ -26,11 +37,13 @@ private:
 
 	TcpPacket::TcpPacketType DeterminePacketType(unsigned short flags);
 
-	void InitSocket();
+	pcap_t * InitSocket();
 	void BindSocketToIp();
 	void CreatePromisciousSocket();
 
-	void ReadOffSocket();
+	void ReadOffSocket(pcap_t * handle);
+
+	//void PacketCallback(u_char *param, const struct pcap_pkthdr *header, const u_char *pkt_data);
 
 	//SocketData * ParseData(unsigned char * data);
 
@@ -38,8 +51,6 @@ private:
 
 	
 	int _targetPort;	
-	SOCKET socketPtr;
-	sockaddr_in socketDefinition;
 
 	PacketOrderer orderer;
 

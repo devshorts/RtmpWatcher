@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdlib>
 #include "TcpDefinitions.h"
 
 class TcpPacket{

@@ -20,7 +20,12 @@ void RtmpPacketAggregator::Add(char * data, int bytesTotal){
 	// see if a packet started
 	auto testingType = GetRtmpPacketType((unsigned char *)payload);
 
-	if(testingType != RtmpPacket::RtmpDataTypes::Unknown && !foundStart){
+	if(testingType != RtmpPacket::RtmpDataTypes::Unknown){
+
+		// we were tracking a previous packet, but somehow we found another. trash the original and just start over
+		if(foundStart && dataCopy != NULL){
+			delete dataCopy;
+		}
 
 		// tracking this packet
 		payloadType = testingType;
@@ -72,6 +77,12 @@ RtmpPacket * RtmpPacketAggregator::PacketReady(){
 }
 
 RtmpPacket::RtmpDataTypes RtmpPacketAggregator::GetRtmpPacketType(unsigned char * data){
+	auto validHeaderType = *data == 0x0 || (*(data) & 0xF0) == 0x40; 
+
+	if(!validHeaderType){
+		return RtmpPacket::RtmpDataTypes::Unknown;
+	}
+
 	unsigned char dataType = *(data + 7);
 
 	RtmpPacket::RtmpDataTypes rtmpType = RtmpPacket::RtmpDataTypes::Unknown;
