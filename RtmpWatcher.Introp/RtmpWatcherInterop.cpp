@@ -8,10 +8,10 @@ using namespace System;
 
 public delegate void DataSentDelegate(RtmpPacket * packet);
 
-void RtmpInterop::RtmpWatcherInterop::Start(int port, System::Action<RtmpPacketInterop^>^ onPacketFound){
+void RtmpInterop::RtmpWatcherInterop::Start(int deviceIndex, int port, System::Action<RtmpPacketInterop^>^ onPacketFound){
 	_onPacketFound = onPacketFound;
 
-	socketGrabber = new RawSocketGrabber(port);
+	socketGrabber = new RawSocketGrabber(deviceIndex, port);
 
 	DataSentDelegate^ dg = gcnew DataSentDelegate(this, &RtmpInterop::RtmpWatcherInterop::DataSent);
 	delegateHandle = GCHandle::Alloc(dg);
