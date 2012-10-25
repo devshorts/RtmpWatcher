@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Common\AMFSerializerUtil.cs" />
     <Compile Include="Common\FluorineClassMappingApplicationContext.cs" />
+    <Compile Include="PacketHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,9 +59,9 @@
       <Project>{6A3F235D-76F9-4F99-BAC7-F981B029D370}</Project>
       <Name>com.TheSilentGroup.Fluorine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RtmpWatcher.Introp\RtmpWatcher.Introp.vcxproj">
-      <Project>{F9E94A8E-2247-4DB5-9206-D7D014E9B114}</Project>
-      <Name>RtmpWatcher.Introp</Name>
+    <ProjectReference Include="..\RtmpWatcher\RtmpWatcher.vcxproj">
+      <Project>{8C6FFF9B-DA2F-4DD9-ACFF-F69F1B4BDE3D}</Project>
+      <Name>RtmpWatcher</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
