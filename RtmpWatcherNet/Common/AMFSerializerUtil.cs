@@ -22,10 +22,23 @@ namespace RtmpWatcherNet.Common
 
         public static Object DeserializeAmf(MemoryStream stream)
         {
-            using(var deserializer = new AMFDeserializer(stream))
+            try
             {
-                return deserializer.ReadObject(new FluorineClassMappingApplicationContext());
+                using (var deserializer = new AMFDeserializer(stream))
+                {
+                    var metohd = deserializer.ReadData(null);
+                    var requestId = deserializer.ReadData(null);
+                    var nullVal = deserializer.ReadData(null);
+                    var obj = deserializer.ReadData(null);
+
+                    Console.WriteLine("Method {0}, Obj {1}", metohd, obj);
+//                    return deserializer.ReadObject(new FluorineClassMappingApplicationContext());
+                }
             }
+            catch
+            {
+            }
+            return null;
         }
 
         public static string ConvertToBase64(T item)

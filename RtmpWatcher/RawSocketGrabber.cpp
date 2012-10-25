@@ -112,7 +112,7 @@ pcap_t * RawSocketGrabber::InitSocket(){
 	const u_char *pkt_data;
 	time_t local_tv_sec;
 	std::string targetPortString = std::to_string(static_cast<long long>(_targetPort));
-	std::string packetFilter("tcp and (src port " + targetPortString + " or dst port " + targetPortString + ")");
+	std::string packetFilter("tcp and src port " + targetPortString);
 	
 	u_int netmask;
 	struct bpf_program fcode;

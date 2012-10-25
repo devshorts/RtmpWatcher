@@ -1,0 +1,826 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6A3F235D-76F9-4F99-BAC7-F981B029D370}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>com.TheSilentGroup.Fluorine</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>com.TheSilentGroup.Fluorine</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>com.TheSilentGroup.Fluorine.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>1591</NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Resources\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Name>System.Web.Services</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activation\ApplicationActivator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation\IActivator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation\ObjectFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation\RequestActivator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation\SessionActivator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\ArrayCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\ByteArray.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\ClassDefinition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\DataInput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\DataOutput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\IDataInput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\IDataOutput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\IExternalizable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMF3\ObjectProxy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFDeserializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMFWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ASObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\ActivationAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\DataSetTypeAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\DataTableTypeAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\FluorineAccessAllowedAttribute.cs" />
+    <Compile Include="Attribute\PageSizeAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\RemotingServiceAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\RoleAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attribute\TransientAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CachedBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CacheResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\CacheMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\CacheTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ClassMappings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\CustomTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ImportNamespacesTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\NullableTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\SecurityTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ServiceMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ServiceTagHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomMemberMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Assemblers\Assembler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Assemblers\IAssembler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\DataDestination.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\DataService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\DataSyncException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Identity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\ListComparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\ListHashCodeProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\MessageContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Messages\DataMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Messages\PagedMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Messages\SequencedMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Messages\UpdateCollectionMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Sequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\UpdateCollectionRange.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DateWrapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\AMFRequestHeaders.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\DebugEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\DescribeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\HttpHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\NetDebug.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostic\TraceHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorResponseBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExceptionASO.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FluorineException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProtocolException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\UnexpectedAMF.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\AbstractFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\AccessFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\ASPXAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\AuthenticationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\CacheFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\DebugFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\DescribeServiceFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\DeserializationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\IAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\IFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\LibraryAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\MessageFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\ProcessFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\SerializationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\ServiceMapFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filter\WsdlFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FluorineGateway.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\AMFContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\FilterChain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\FluorineHttpApplicationContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\HttpSessionStateWrapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\IApplicationContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gateway\ISessionState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Invocation\IInvocationCallback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Invocation\IInvocationResultHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Invocation\InvocationHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Invocation\InvocationManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineEndingConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Logging\FluorineLogger.cs" />
+    <Compile Include="MessageOutput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\AdapterSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\ChannelSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\DestinationSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\MetadataSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\NetworkSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\SecuritySettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\ServerSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Config\ServiceSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Destination.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\DotNetAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\AMFEndpoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\EndpointBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\IEndpoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\RTMPEndpoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\AdapterBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\BasicScopeEnumerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Event\IEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Event\IEventDispatcher.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Event\IEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Event\IEventListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Event\IEventObservable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IAttributeStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IBasicScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IClientRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\ICoreObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IGlobalScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IScopeAware.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IScopeHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IScopeResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\IServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Persistence\IPersistable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Persistence\IPersistenceStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\IPendingServiceCall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\IPendingServiceCallback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\IServiceCall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\IServiceHandlerProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\IServiceInvoker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\PendingCall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Service\ServiceCall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\So\ISharedObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\So\ISharedObjectListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Stream\IClientStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Api\Stream\IStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\ApplicationAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\AttributeStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\BasicScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\ClientRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\ConnectionBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Context.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\CoreHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Event\ChunkSize.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Event\Invoke.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Event\IRtmpEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Event\Notify.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Event\Ping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Exceptions\ClientRejectedException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Exceptions\ScopeNotFoundException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\GlobalScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\PersistableAttributeStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpChannel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpConstants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpPacket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpProtocolDecoder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpProtocolEncoder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\RtmpWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Scope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\ScopeResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\StatusASO.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\MessageBroker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\MessageClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\MessageDestination.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\MessageException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\MessageServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\AcknowledgeMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\AsyncMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\CommandMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\ErrorMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\IMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\MessageBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\RemotingMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Messages\RPCMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Security\GenericLoginCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Security\ILoginCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\AuthenticationService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\IAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\IService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\MessageService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\Messaging\SubscriptionManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\RemotingService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\Remoting\RemotingAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\Remoting\RemotingDestination.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\ServiceAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Services\ServiceBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messaging\Util\UriBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MethodHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PageableResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ResponseBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\ILoginService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StringWriterWithEncoding.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\DisposableBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\IO\ByteBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\IClientSocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\IServerSocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\ISocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\ISocketService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\MessageBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\ServerSocketConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\SocketListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Net\SocketServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Runtime\Serialization\Formatters\Binary\AmfFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System\Threading\ThreadPoolEx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\WsdlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="fluorine.snk" />
+    <None Include="log4net.config" />
+    <None Include="Resource\fluorinetest.swf" />
+    <Content Include="services-config.xml" />
+    <EmbeddedResource Include="Resource\fluorine.css" />
+    <EmbeddedResource Include="Resource\tab.js" />
+    <EmbeddedResource Include="Resource\tree.css" />
+    <EmbeddedResource Include="Resource\tree.js" />
+    <EmbeddedResource Include="Resource\treenodedot.gif" />
+    <EmbeddedResource Include="Resource\treenodeminus.gif" />
+    <EmbeddedResource Include="Resource\treenodeplus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>CALL ..\..\CopyIfTargetExists.bat "$(OutDir)" "C:\projects\cube\trunk\src\core\Cube.MasterService.Web\bin";
+CALL ..\..\CopyIfTargetExists.bat "$(OutDir)" "C:\Projects\Cube\trunk\src\AtellisShared\Resources"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
