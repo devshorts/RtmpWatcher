@@ -190,7 +190,9 @@
     <Compile Include="Attribute\DataTableTypeAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\FluorineAccessAllowedAttribute.cs" />
+    <Compile Include="Attribute\FluorineAccessAllowedAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Attribute\PageSizeAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -407,7 +409,9 @@
     <Compile Include="LineEndingConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logging\FluorineLogger.cs" />
+    <Compile Include="Logging\FluorineLogger.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MessageOutput.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -648,6 +652,7 @@
     <Compile Include="Messaging\Endpoints\Rtmp\ScopeResolver.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Messaging\Endpoints\Rtmp\Server.cs" />
     <Compile Include="Messaging\Endpoints\Rtmp\StatusASO.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -750,6 +755,7 @@
     <Compile Include="System\IO\ByteBuffer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="System\IO\MemoryStreamEx.cs" />
     <Compile Include="System\Net\IClientSocket.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -789,15 +795,8 @@
     <None Include="App.config" />
     <None Include="fluorine.snk" />
     <None Include="log4net.config" />
-    <None Include="Resource\fluorinetest.swf" />
     <Content Include="services-config.xml" />
-    <EmbeddedResource Include="Resource\fluorine.css" />
-    <EmbeddedResource Include="Resource\tab.js" />
-    <EmbeddedResource Include="Resource\tree.css" />
-    <EmbeddedResource Include="Resource\tree.js" />
-    <EmbeddedResource Include="Resource\treenodedot.gif" />
-    <EmbeddedResource Include="Resource\treenodeminus.gif" />
-    <EmbeddedResource Include="Resource\treenodeplus.gif" />
+    <None Include="Resource\fluorinetest.swf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -815,6 +814,15 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\fluorine.css" />
+    <EmbeddedResource Include="Resource\tab.js" />
+    <EmbeddedResource Include="Resource\tree.css" />
+    <EmbeddedResource Include="Resource\tree.js" />
+    <EmbeddedResource Include="Resource\treenodedot.gif" />
+    <EmbeddedResource Include="Resource\treenodeminus.gif" />
+    <EmbeddedResource Include="Resource\treenodeplus.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -4,6 +4,7 @@
 
 #include "RtmpPacketInterop.h"
 #include "RawSocketGrabber.h"
+#include <string>
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -14,7 +15,7 @@ namespace RtmpInterop {
 	{
 		public:
 			!RtmpWatcherInterop() { delete socketGrabber; };
-			void Start(int deviceIndex, int port,  System::Action<RtmpPacketInterop^>^ onPacketFound);
+			void Start(System::String ^ nicDescription, int port,  System::Action<RtmpPacketInterop^>^ onPacketFound);
 			void Complete();
 
 		private:
@@ -22,5 +23,6 @@ namespace RtmpInterop {
 			RawSocketGrabber* socketGrabber;
 			void DataSent(RtmpPacket *);
 			GCHandle delegateHandle;
+			void ConvertManagedStringToStdString(std::string &outStr, System::String ^str);
 	};
 }

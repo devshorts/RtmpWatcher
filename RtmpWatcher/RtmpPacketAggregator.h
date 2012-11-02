@@ -5,7 +5,7 @@
 class RtmpPacketAggregator
 {
 public:
-	RtmpPacketAggregator(void);
+	RtmpPacketAggregator(int port);
 	void Add(const char * data, int bytesTotal);
 	RtmpPacket * PacketReady();
 
@@ -18,5 +18,7 @@ private:
 	bool foundStart;
 	char * dataCopy;
 	RtmpPacket::RtmpDataTypes payloadType;
+
+	int _port;
 };
 

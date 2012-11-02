@@ -3,14 +3,21 @@
 #include "RtmpPacketAggregator.h"
 #include "RtmpPacket.h"
 
+#include <map>
+#include <vector>
+
 class PacketOrderer
 {
 public:
 	PacketOrderer();
 	~PacketOrderer();
-	void AddPacket(const char * data, int length);
+	void AddPacket(const char * ipFragment, int length);
 	RtmpPacket * PacketReady();
 private:
-	RtmpPacketAggregator aggregator;
+	void TranslateIP(unsigned int ipInt, char *ipString);
+
+	std::map<int, RtmpPacketAggregator *> aggregatorsByPort;
+
+	int GetDestinationPort(const char * ipFragment);
 };
 

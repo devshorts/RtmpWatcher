@@ -20,7 +20,7 @@ typedef int (__stdcall *RtmpPacketFoundFuncPtr)(RtmpPacket *);
 
 class RawSocketGrabber{
 public:
-	RawSocketGrabber(int deviceIndex, int targetPort);
+	RawSocketGrabber(std::string nicDescription, int targetPort);
 	~RawSocketGrabber();
 	void operator()();
 	void Start();
@@ -41,7 +41,7 @@ private:
 
 	RtmpPacketFoundFuncPtr _rtmpPacketFoundCallback;
 	
-    int _targetDevice;
+    std::string _targetDevice;
 	int _targetPort;
 
 	PacketOrderer orderer;

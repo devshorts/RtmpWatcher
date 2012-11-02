@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AMFSerializerUtil.cs" />
+    <Compile Include="Common\CollectionUtil.cs" />
     <Compile Include="Common\FluorineClassMappingApplicationContext.cs" />
     <Compile Include="PacketHandler.cs" />
     <Compile Include="Program.cs" />

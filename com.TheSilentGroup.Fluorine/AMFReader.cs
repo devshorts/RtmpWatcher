@@ -237,65 +237,23 @@ namespace com.TheSilentGroup.Fluorine
 			return value;
 		}
 
-		public object ReadObject(IApplicationContext applicationContext)
-		{
-			string typeIdentifier = ReadString();
+        public object ReadObject(IApplicationContext applicationContext)
+        {
+            string typeIdentifier = ReadString();
 
-			if( _log != null && _log.IsDebugEnabled )
-				_log.Debug("Attempt to read custom object " + typeIdentifier + ".");
+            string key = CustomMemberMapper.Instance.ToDotNet(ReadString());
+            for (int typeCode = ReadByte(); typeCode != 9; typeCode = ReadByte())
+            {
 
-			//First try to locate the type.
-			//Type type = ObjectFactory.Locate(applicationContext, typeIdentifier);
-// 			if( type != null )
-// 			{
-// 				object obj = ObjectFactory.CreateInstance(applicationContext, type);
-// 				_amf0ObjectReferences.Add( _amf0ObjectReferences.Count, obj);
+                object value = ReadData(typeCode, applicationContext);
 
-				string key = CustomMemberMapper.Instance.ToDotNet(ReadString());
-				for(int typeCode = ReadByte(); typeCode != 9; typeCode = ReadByte())
-				{
-                    
-					object value = ReadData(typeCode, applicationContext);
+                key = CustomMemberMapper.Instance.ToDotNet(ReadString());
+            }
 
-                    Console.WriteLine("{0} - {1}", key, value);
+            return typeIdentifier;
+        }
 
-// 					PropertyInfo pi = type.GetProperty(key);
-// 					if( pi != null )
-// 					{
-// 						object castValue = TypeHelper.ChangeType(applicationContext, value, pi.PropertyType);
-// 						pi.SetValue( obj, castValue, null );
-// 					}
-// 					else
-// 					{
-// 						FieldInfo fi = type.GetField(key, BindingFlags.Public | BindingFlags.Instance);
-// 						if( fi != null )
-// 						{
-// 							object castValue = TypeHelper.ChangeType(applicationContext, value, fi.FieldType);
-// 							fi.SetValue( obj, castValue );
-// 						}
-// 						else
-// 							if( _log != null && _log.IsWarnEnabled )
-// 								_log.Warn("Custom object " + typeIdentifier + " property or field " + key + " not found.");
-// 					}
-					key = CustomMemberMapper.Instance.ToDotNet(ReadString());
-				}
-	//			return obj;
-			//}
-// 			else
-// 			{
-// 				if( _log != null && _log.IsWarnEnabled )
-// 					_log.Warn("Custom object " + typeIdentifier + " could not be loaded.");
-// 
-// 				ASObject asObject;
-// 				asObject = ReadASObject(applicationContext);
-// 				asObject.TypeName = typeIdentifier;
-// 				return asObject;
-// 			}
-
-		    return typeIdentifier;
-		}
-
-		public ASObject ReadASObject(IApplicationContext applicationContext)
+	    public ASObject ReadASObject(IApplicationContext applicationContext)
 		{
 			ASObject asObject = new ASObject();
 			_amf0ObjectReferences.Add( _amf0ObjectReferences.Count, asObject);

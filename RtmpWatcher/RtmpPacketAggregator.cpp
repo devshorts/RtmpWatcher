@@ -1,8 +1,9 @@
 #include "RtmpPacketAggregator.h"
 #include "TcpDefinitions.h"
 
-RtmpPacketAggregator::RtmpPacketAggregator(void)
+RtmpPacketAggregator::RtmpPacketAggregator(int port)
 {
+	_port = port;
 	dataCopy = NULL;
 	foundStart = false;
 	totalExpected = 0;

@@ -1211,6 +1211,66 @@
             <param name="credentials">The credentials are passed as a Hashtable to allow for extra properties to be passed in the future. For now, only a "password" property is sent.</param>
             <returns>A principal object represents the security context of the user.</returns>
         </member>
+        <member name="T:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Server">
+            <summary>
+            Summary description for Server.
+            </summary>
+        </member>
+        <member name="T:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer">
+            <summary>
+            Summary description for IServer.
+            </summary>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobal(System.String)">
+            <summary>
+            Gets the global scope with a given name.
+            </summary>
+            <param name="name">The name of the global scope.</param>
+            <returns></returns>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.RegisterGlobal(com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IGlobalScope)">
+            <summary>
+            Register a global scope.
+            </summary>
+            <param name="scope">The global scope to register.</param>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.LookupGlobal(System.String,System.String)">
+            <summary>
+            Lookup the global scope for a host.
+            </summary>
+            <param name="hostName">The name of the host.</param>
+            <param name="contextPath">The path in the host.</param>
+            <returns></returns>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.AddMapping(System.String,System.String,System.String)">
+            <summary>
+            Map a virtual hostname and a path to the name of a global scope.
+            </summary>
+            <param name="hostName">The name of the host to map.</param>
+            <param name="contextPath"></param>
+            <param name="globalName">The name of the global scope to map to.</param>
+            <returns></returns>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.RemoveMapping(System.String,System.String)">
+            <summary>
+            Unregister a previously mapped global scope.
+            </summary>
+            <param name="hostName"></param>
+            <param name="contextPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobalNames">
+            <summary>
+            Gets list of global scope names.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobalScopes">
+            <summary>
+            Get list of global scopes.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.GlobalScope">
             <summary>
             Summary description for GlobalScope.
@@ -1438,61 +1498,6 @@
             Summary description for IPendingServiceCall.
             </summary>
         </member>
-        <member name="T:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer">
-            <summary>
-            Summary description for IServer.
-            </summary>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobal(System.String)">
-            <summary>
-            Gets the global scope with a given name.
-            </summary>
-            <param name="name">The name of the global scope.</param>
-            <returns></returns>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.RegisterGlobal(com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IGlobalScope)">
-            <summary>
-            Register a global scope.
-            </summary>
-            <param name="scope">The global scope to register.</param>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.LookupGlobal(System.String,System.String)">
-            <summary>
-            Lookup the global scope for a host.
-            </summary>
-            <param name="hostName">The name of the host.</param>
-            <param name="contextPath">The path in the host.</param>
-            <returns></returns>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.AddMapping(System.String,System.String,System.String)">
-            <summary>
-            Map a virtual hostname and a path to the name of a global scope.
-            </summary>
-            <param name="hostName">The name of the host to map.</param>
-            <param name="contextPath"></param>
-            <param name="globalName">The name of the global scope to map to.</param>
-            <returns></returns>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.RemoveMapping(System.String,System.String)">
-            <summary>
-            Unregister a previously mapped global scope.
-            </summary>
-            <param name="hostName"></param>
-            <param name="contextPath"></param>
-            <returns></returns>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobalNames">
-            <summary>
-            Gets list of global scope names.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.Api.IServer.GetGlobalScopes">
-            <summary>
-            Get list of global scopes.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:com.TheSilentGroup.Fluorine.Invocation.IInvocationCallback">
             <summary>
             This type supports the Fluorine infrastructure and is not intended to be used directly from your code.
@@ -1647,6 +1652,11 @@
             <returns>
             ISocketConnection to use.
             </returns>
+        </member>
+        <member name="T:com.TheSilentGroup.Fluorine.SystemHelpers.IO.MemoryStreamEx">
+            <summary>
+            This type supports the Fluorine infrastructure and is not intended to be used directly from your code.
+            </summary>
         </member>
         <member name="T:com.TheSilentGroup.Fluorine.Messaging.Endpoints.Rtmp.RtmpContext">
             <summary>

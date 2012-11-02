@@ -4,14 +4,30 @@
 
 #include "RtmpWatcherInterop.h"
 
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
 using namespace System;
+using System::Runtime::InteropServices::Marshal;
 
 public delegate void DataSentDelegate(RtmpPacket * packet);
 
-void RtmpInterop::RtmpWatcherInterop::Start(int deviceIndex, int port, System::Action<RtmpPacketInterop^>^ onPacketFound){
+void RtmpInterop::RtmpWatcherInterop::ConvertManagedStringToStdString(std::string &outStr, System::String ^str) 
+{
+	IntPtr ansiStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(str); 
+	outStr = (const char*)ansiStr.ToPointer(); System::Runtime::InteropServices::Marshal::FreeHGlobal(ansiStr); 
+}
+
+void RtmpInterop::RtmpWatcherInterop::Start(System::String ^ nicDescription, int port, System::Action<RtmpPacketInterop^>^ onPacketFound){
 	_onPacketFound = onPacketFound;
 
-	socketGrabber = new RawSocketGrabber(deviceIndex, port);
+	string nativeNicString; 
+
+	ConvertManagedStringToStdString(nativeNicString, nicDescription);
+
+	socketGrabber = new RawSocketGrabber(nativeNicString, port);
 
 	DataSentDelegate^ dg = gcnew DataSentDelegate(this, &RtmpInterop::RtmpWatcherInterop::DataSent);
 	delegateHandle = GCHandle::Alloc(dg);

@@ -9,7 +9,7 @@
 
 #pragma comment( lib, "ws2_32.lib" ) // linker must use this lib for sockets
 
-RawSocketGrabber::RawSocketGrabber(int deviceIndex, int targetPort){
+RawSocketGrabber::RawSocketGrabber(std::string deviceIndex, int targetPort){
     _targetDevice = deviceIndex;
 	_targetPort = targetPort;
 	isRunning = false;
@@ -124,10 +124,24 @@ pcap_t * RawSocketGrabber::InitSocket(){
 		exit(1);
 	}
 
-    inum = _targetDevice;
+	/* Jump to the selected adapter */
+	/* Print the list */
+	for(d=alldevs; d; d=d->next)
+	{
+		printf("%d. %s\n    ", ++i, d->name);
+
+		if (d->description)
+			printf(" (%s)\n", d->description);
+		else
+			printf(" (No description available)\n");
+	}
+
+	printf("Enter the interface number (1-%d):",i);
+	
+	scanf("%d", &inum);
 
 	/* Jump to the selected adapter */
-	for(d=alldevs, i=0; i< inum-1 ;d=d->next, i++);
+	for (d=alldevs, i=0; i< inum-1 ;d=d->next, i++);
 
 	/* Open the device */
 	if ( (adhandle= pcap_open(d->name,          // name of the device
