@@ -21,12 +21,13 @@ void RtmpPacketAggregator::Add(const char * data, int bytesTotal){
 	// see if a packet started
 	auto testingType = GetRtmpPacketType((unsigned char *)payload);
 
-	if(testingType != RtmpPacket::RtmpDataTypes::Unknown){
+	if(testingType != RtmpPacket::RtmpDataTypes::Unknown && !foundStart){
 
-		// we were tracking a previous packet, but somehow we found another. trash the original and just start over
-		if(foundStart && dataCopy != NULL){
-			delete dataCopy;
-		}
+		//// we were tracking a previous packet, but somehow we found another. trash the original and just start over
+		//if(foundStart && dataCopy != NULL){
+		//	printf("got packet in the middle %d\n", testingType);
+		//	delete dataCopy;
+		//}
 
 		// tracking this packet
 		payloadType = testingType;

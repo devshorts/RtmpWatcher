@@ -9,7 +9,6 @@ namespace RtmpWatcherNet
     {
         public static void OnPacketFound(RtmpPacketInterop obj)
         {
-            return;
             using (var newStream = new MemoryStream(obj.GetBytes()))
             {
                 var streamCopy = PruneStreamChunkDelimiters(newStream, obj);

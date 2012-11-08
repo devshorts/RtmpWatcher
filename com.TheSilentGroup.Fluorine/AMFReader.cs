@@ -248,6 +248,8 @@ namespace com.TheSilentGroup.Fluorine
                 object value = ReadData(typeCode, applicationContext);
 
                 key = CustomMemberMapper.Instance.ToDotNet(ReadString());
+
+                Console.WriteLine("{0} - {1}", key, value);
             }
 
             return typeIdentifier;

@@ -19,5 +19,7 @@ private:
 	std::map<int, RtmpPacketAggregator *> aggregatorsByPort;
 
 	int GetDestinationPort(const char * ipFragment);
+
+	
 };
 

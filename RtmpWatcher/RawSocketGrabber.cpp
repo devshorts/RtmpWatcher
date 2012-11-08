@@ -58,6 +58,8 @@ void RawSocketGrabber::ReadOffSocket(pcap_t * adhandle){
 
 		orderer.AddPacket((const char *)(pkt_data + ethernetFrameHeader), header->len - ethernetFrameHeader);
 
+		//printf("%d\n", header->len - ethernetFrameHeader);
+
 		RtmpPacket * rtmpPacket = orderer.PacketReady();
 
 		if(rtmpPacket != NULL){
@@ -112,7 +114,7 @@ pcap_t * RawSocketGrabber::InitSocket(){
 	const u_char *pkt_data;
 	time_t local_tv_sec;
 	std::string targetPortString = std::to_string(static_cast<long long>(_targetPort));
-	std::string packetFilter("tcp and src port " + targetPortString);
+	std::string packetFilter("tcp and src port " + targetPortString + " or dst port " + targetPortString);
 	
 	u_int netmask;
 	struct bpf_program fcode;

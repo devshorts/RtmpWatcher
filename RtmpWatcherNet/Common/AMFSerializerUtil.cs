@@ -29,9 +29,19 @@ namespace RtmpWatcherNet.Common
                     var metohd = deserializer.ReadData(null);
                     var requestId = deserializer.ReadData(null);
                     var nullVal = deserializer.ReadData(null);
-                    var obj = deserializer.ReadData(null);
 
-                    Console.WriteLine("Method {0}, Obj {1}", metohd, obj);
+                    Object obj = "na";
+
+                    try
+                    {
+                        obj = deserializer.ReadData(null);
+                    }
+                    catch(Exception ex)
+                    {
+                        
+                    }
+
+                    Console.WriteLine("{0}: {1}", metohd, obj);
 //                    return deserializer.ReadObject(new FluorineClassMappingApplicationContext());
                 }
             }
