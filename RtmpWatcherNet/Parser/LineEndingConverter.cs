@@ -1,6 +1,4 @@
-using System;
 using System.Text;
-using log4net;
 
 namespace RtmpWatcherNet.Parser
 {

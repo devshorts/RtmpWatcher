@@ -66,6 +66,7 @@ Global
 		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|Win32.Build.0 = Release|Any CPU
 		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|x64.ActiveCfg = Release|Any CPU
 		{E79B31BF-C1DE-4FEA-8C3B-C3352A473771}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
