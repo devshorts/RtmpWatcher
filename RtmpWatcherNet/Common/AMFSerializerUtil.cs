@@ -1,40 +1,26 @@
 ﻿using System;
 using System.IO;
-using com.TheSilentGroup.Fluorine;
+using RtmpWatcherNet.Parser;
 
 namespace RtmpWatcherNet.Common
 {
     public static class AMFSerializerUtil<T>
     {
-        public static byte[] SerializeAMF3(T item)
-        {
-            using (var amfData = new MemoryStream())
-            {
-                var ser = new AMFSerializer(amfData) { UseLegacyCollection = false };
-                using (var fcm = new FluorineClassMappingApplicationContext())
-                {
-                    ser.WriteData(fcm, ObjectEncoding.AMF3 , item);
-                    amfData.Position = 0;
-                    return amfData.ToArray();
-                }
-            }
-        }
-
         public static Object DeserializeAmf(MemoryStream stream)
         {
             try
             {
-                using (var deserializer = new AMFDeserializer(stream))
+                using (var deserializer = new AMFReader(stream))
                 {
-                    var metohd = deserializer.ReadData(null);
-                    var requestId = deserializer.ReadData(null);
-                    var nullVal = deserializer.ReadData(null);
+                    var metohd = deserializer.ReadData();
+                    var requestId = deserializer.ReadData();
+                    var nullVal = deserializer.ReadData();
 
                     Object obj = "na";
 
                     try
                     {
-                        obj = deserializer.ReadData(null);
+                        obj = deserializer.ReadData();
                     }
                     catch(Exception ex)
                     {
@@ -49,12 +35,6 @@ namespace RtmpWatcherNet.Common
             {
             }
             return null;
-        }
-
-        public static string ConvertToBase64(T item)
-        {
-            var amfData = SerializeAMF3(item);
-            return Convert.ToBase64String(amfData);
         }
     }
 }
