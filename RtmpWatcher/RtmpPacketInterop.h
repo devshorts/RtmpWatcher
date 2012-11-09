@@ -14,6 +14,7 @@ namespace RtmpInterop {
 	{
 		public:
 			RtmpPacketInterop(RtmpPacket * packet);
+			RtmpPacketInterop(array<unsigned char> ^bytes, int length, String ^ sourceIP, String ^ destIP);
 			int GetLength();
 			String ^ GetSourceIP();
 			String ^ GetDestIP();

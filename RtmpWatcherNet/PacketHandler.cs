@@ -5,7 +5,7 @@ using RtmpWatcherNet.Common;
 
 namespace RtmpWatcherNet
 {
-    class PacketHandler
+    public class PacketHandler
     {
         public static void OnPacketFound(RtmpPacketInterop obj)
         {

@@ -23,11 +23,11 @@ void RtmpPacketAggregator::Add(const char * data, int bytesTotal){
 
 	if(testingType != RtmpPacket::RtmpDataTypes::Unknown && !foundStart){
 
-		//// we were tracking a previous packet, but somehow we found another. trash the original and just start over
-		//if(foundStart && dataCopy != NULL){
-		//	printf("got packet in the middle %d\n", testingType);
-		//	delete dataCopy;
-		//}
+		// we were tracking a previous packet, but somehow we found another. trash the original and just start over
+		if(foundStart && dataCopy != NULL){
+			printf("got packet in the middle %d\n", testingType);
+			delete dataCopy;
+		}
 
 		// tracking this packet
 		payloadType = testingType;

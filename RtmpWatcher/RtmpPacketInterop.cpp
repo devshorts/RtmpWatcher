@@ -20,6 +20,13 @@ RtmpInterop::RtmpPacketInterop::RtmpPacketInterop(RtmpPacket * packet){
 	_packetType = DeterminePacketType(packet->rtmpPacketType);
 }
 
+RtmpInterop::RtmpPacketInterop::RtmpPacketInterop(array<unsigned char> ^bytes, int length, String ^ sourceIP, String ^ destIP){
+	_bytes = bytes;
+	_length = length;
+	_sourceIP = sourceIP;
+	_destIp = destIP;
+}
+
 RtmpInterop::RtmpPacketTypeManaged::RtmpPacketType RtmpInterop::RtmpPacketInterop::GetRtmpPacketType(){
 	return _packetType;
 }
