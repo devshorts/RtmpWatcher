@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using RtmpInterop;
 using RtmpWatcherNet.Common;
+using RtmpWatcherNet.Parser;
 
 namespace RtmpWatcherNet
 {
@@ -9,6 +12,16 @@ namespace RtmpWatcherNet
     {
         public static void OnPacketFound(RtmpPacketInterop obj)
         {
+
+            AmfContainer deserializedOutput = null;
+//
+//            var x = "new byte[]{";
+//            foreach(var b in obj.GetBytes())
+//            {
+//                x += b.ToString("x2") + ",";
+//            }
+//            x += "};";
+
             using (var newStream = new MemoryStream(obj.GetBytes()))
             {
                 var streamCopy = PruneStreamChunkDelimiters(newStream, obj);
@@ -17,10 +30,30 @@ namespace RtmpWatcherNet
                                   obj.GetRtmpPacketType());
 
 
-                var decoder = AMFSerializerUtil<object>.DeserializeAmf(streamCopy);
+                deserializedOutput = AMFSerializerUtil<AmfContainer>.DeserializeAmf(streamCopy);
+            }
 
+            Visualize(deserializedOutput, 0);
+        }
 
-                Console.WriteLine();
+        private static void Visualize(AmfContainer container, int count)
+        {
+            if (container == null)
+            {
+                return;
+            }
+
+            var tabs = Enumerable.Range(0, count).Select(i => "\t").FoldToDelimitedList(i => i, "");
+            Console.WriteLine("{0}{1}: {2}", tabs, container.Name, container.Value);
+
+            if(CollectionUtil.IsNullOrEmpty(container.Values))
+            {
+                return;
+            }
+
+            foreach (var value in container.Values)
+            {
+                Visualize(value, ++count);
             }
         }
 

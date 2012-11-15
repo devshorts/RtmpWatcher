@@ -208,16 +208,16 @@ namespace RtmpWatcherNet.Parser
 
         public object ReadObject( )
         {
-            var container = new Container();
+            var container = new AmfContainer();
 
             string typeIdentifier = ReadString();
 
             container.Name = typeIdentifier;
-            container.Values = new List<Container>();
+            container.Values = new List<AmfContainer>();
 
             string key = ReadString();
 
-            var subContainer = new Container();
+            var subContainer = new AmfContainer();
             subContainer.Name = key;
 
             for (int typeCode = ReadByte(); typeCode != 9; typeCode = ReadByte())
@@ -228,13 +228,13 @@ namespace RtmpWatcherNet.Parser
 
                 container.Values.Add(subContainer);
 
-                subContainer = new Container();
+                subContainer = new AmfContainer();
 
                 key = ReadString();
 
                 subContainer.Name = key;
 
-                Console.WriteLine("{0} - {1}", key, value);
+                //Console.WriteLine("{0} - {1}", key, value);
             }
 
             return container;

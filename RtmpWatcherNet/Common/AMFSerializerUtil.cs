@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using RtmpWatcherNet.Parser;
 
 namespace RtmpWatcherNet.Common
 {
-    public static class AMFSerializerUtil<T>
+    public static class AMFSerializerUtil<T> where T : class, new()
     {
-        public static Object DeserializeAmf(MemoryStream stream)
+        public static AmfContainer DeserializeAmf(MemoryStream stream)
         {
             try
             {
                 using (var deserializer = new AMFReader(stream))
                 {
-                    var metohd = deserializer.ReadData();
+                    var method = deserializer.ReadData();
                     var requestId = deserializer.ReadData();
                     var nullVal = deserializer.ReadData();
 
@@ -20,15 +23,23 @@ namespace RtmpWatcherNet.Common
 
                     try
                     {
+                        var container = new AmfContainer();
                         obj = deserializer.ReadData();
+
+                        container.Name = Convert.ToString(method);
+                        container.Values = new List<AmfContainer>{ new AmfContainer
+                                                                       {
+                                                                           Value = obj
+                                                                       }};
+
+                        return container;
                     }
                     catch(Exception ex)
                     {
                         
                     }
 
-                    Console.WriteLine("{0}: {1}", metohd, obj);
-//                    return deserializer.ReadObject(new FluorineClassMappingApplicationContext());
+                    Console.WriteLine("{0}: {1}", method, obj);
                 }
             }
             catch
