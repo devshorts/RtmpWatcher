@@ -1,40 +1,7 @@
-========================================================================
-    CONSOLE APPLICATION : RtmpWatcher Project Overview
-========================================================================
+---
+Basic Gist
+---
 
-AppWizard has created this RtmpWatcher application for you.
+RawSocketGrabber.cpp basically it takes a packet and sends it to the "orderer". The orderer (PacketOrderer.cpp) is responsible for organizing packets by destination ports. The aggregator (RtmpPacketAggregator.cpp) pieces together tcp packets and parsers raw rtmp packets out of. Every time you capture a packet in the grabber, the grabber then asks to see if there are any packets that are ready (via the orderer to the aggregator). When a packet is ready an RtmpPacket object. Once we have a packet, it gets marshalled through managed via a function pointer to an interop class (RtmpWatcherInterop.cpp) that invokes an Action<RtmpPacketInterop> delegate into C#. 
 
-This file contains a summary of what you will find in each of the files that
-make up your RtmpWatcher application.
-
-
-RtmpWatcher.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
-
-RtmpWatcher.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-RtmpWatcher.cpp
-    This is the main application source file.
-
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named RtmpWatcher.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
+http://tech.blinemedical.com/dropped-packets-with-promiscuous-raw-sockets/
