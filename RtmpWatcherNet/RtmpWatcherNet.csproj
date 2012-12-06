@@ -52,10 +52,10 @@
     <Compile Include="Common\CollectionUtil.cs" />
     <Compile Include="Common\LinqExtensions.cs" />
     <Compile Include="PacketHandler.cs" />
+    <Compile Include="Parser\AmfContainer.cs" />
     <Compile Include="Parser\AmfParser.cs" />
     <Compile Include="Parser\ASObject.cs" />
     <Compile Include="Parser\Constants.cs" />
-    <Compile Include="Parser\AmfItem.cs" />
     <Compile Include="Parser\LineEndingConverter.cs" />
     <Compile Include="Parser\UnexpectedAMF.cs" />
     <Compile Include="Program.cs" />
